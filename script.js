@@ -17,24 +17,27 @@ addBtn.addEventListener("click", addTransaction);
 calcBtn.addEventListener("click", calculateSubTotal);
 clearHistoryBtn.addEventListener("click", clearTransactionHistory);
 
-function addTransaction() {
-  transactionNone.classList.add("no-transactions-style");
-  const newTransaction = document.createElement("p");
-  const type = document.createElement("span");
-  const amt = document.createElement("span");
-  type.textContent = transactionInput.value;
-  amt.textContent = amountInput.value;
-  const amtValue = Number(amountInput.value);
-  if (amtValue > 0) {
-    allIncomes.push(amtValue);
-  } else if (amtValue < 0) {
-    allExpenses.push(amtValue);
+function addTransaction(event) {
+  event.preventDefault();
+  if (transactionInput.value !== "" || amountInput.value !== "") {
+    transactionNone.classList.add("no-transactions-style");
+    const newTransaction = document.createElement("p");
+    const type = document.createElement("span");
+    const amt = document.createElement("span");
+    type.textContent = transactionInput.value;
+    amt.textContent = amountInput.value;
+    const amtValue = Number(amountInput.value);
+    if (amtValue > 0) {
+      allIncomes.push(amtValue);
+    } else if (amtValue < 0) {
+      allExpenses.push(amtValue);
+    }
+    newTransaction.classList.add("transaction-history-style");
+    newTransaction.appendChild(type);
+    newTransaction.appendChild(amt);
+    transactionHistory.appendChild(newTransaction);
+    form.reset();
   }
-  newTransaction.classList.add("transaction-history-style");
-  newTransaction.appendChild(type);
-  newTransaction.appendChild(amt);
-  transactionHistory.appendChild(newTransaction);
-  form.reset();
 }
 
 function calculateSubTotal() {
